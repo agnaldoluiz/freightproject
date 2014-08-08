@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+	<h1>Carriers</h1>
+	<table class="table table-bordered">
+		<tr>
+			<th>CARRIER</th>
+			<th>NAME</th>
+			<th>CARRIER CODE</th>
+			<th>DISPUTE EMAILS</th>
+			<th>PAYMENT RELEASE EMAILS</th>
+		</tr>
+		{% for carrier in carriers %}
+		<tr>
+			<td><a href="{{url_for('carrier', name = carrier.name)}}"><img src="{{carrier.avatar()}}" height="80" width="80"/></a></td>
+			<td><a href="{{url_for('carrier', name = carrier.name)}}">{{carrier.name|replace('_', ' ')|upper}}</a></td>
+			<td>{{carrier.id}}
+			<td>{{carrier.dispute_emails}}</td>
+			<td>{{carrier.payment_release_emails}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endblock %}

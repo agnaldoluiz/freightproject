@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+  <div class="container">
+    <h1>Freight Control</h1>
+    <br>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  </div> 
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-5">
+      <table class="table table-bordered">
+        <h3>ACTIONS</h3>
+        <tr>
+          <td><a href="{{url_for('evaluate')}}" type="button" class="btn btn-primary btn-block">Evaluate</a></td>
+          <td><i>Review Pending Eval Items</i></td>
+        </tr>
+        <tr>
+          <td><a href="{{url_for('dispute')}}" type="button" class="btn btn-primary btn-block">Dispute Report</a></td>
+          <td><i>Review Under Dispute Items</i></td>
+        </tr>
+        <tr>
+          <td><button type="button" class="btn btn-primary btn-block">Payment Release</button></td>
+          <td><i>Review Payment Status</i></td>
+        </tr>
+        <tr>
+          <td><button type="button" class="btn btn-primary btn-block">Email Pmt Release</button></td>
+          <td><i>Email Payment Release</i></td>
+        </tr>
+        <tr>
+          <td><button type="button" class="btn btn-primary btn-block">Create Blank DB</button></td>
+          <td><i>Create Blank DB from this file</i></td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-md-7">
+      <table class="table table-striped table-hover">
+        <h3>MASTER DATABASE</h3>
+        <tr>
+          <th>TOTAL LINES IN DATABASE</th>
+          <td>{{freights|count}}</td>
+          <td>100%</td>
+        </tr>
+        <tr>
+          <th>Payment Processed</th>
+          <td>{{processed|count}}</td>
+          <td>{{(processed|count)/(freights|count)* 100}}%</td>
+        </tr>
+        <tr>
+          <th>Released for Payment</th>
+          <td>MOC</td>
+          <td>MOC</td>
+        </tr>
+        <tr>
+          <th>Accepted for Payment</th>
+          <td>{{accepted|count}}</td>
+          <td>MOC</td>
+        </tr>
+        <tr>
+          <th>Under Dispute</th>
+          <td>MOC</td>
+          <td>MOC</td>
+        </tr>
+        <tr>
+          <th>Dispute Accepted</th>
+          <td>MOC</td>
+          <td>MOC</td>
+        </tr>
+        <tr>
+          <th>Pending Evaluation</th>
+          <td>{{evaluate|count}}</td>
+          <td>MOC</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+<br/>
+
+<div class="container">
+  <div id="container" style="min-width: 310px; height: 400px; max-width: 1100px; margin: 0 auto"></div>
+</div>
+
+<br />
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <table class="table">
+        <caption class="caption">REPORTS</caption>
+        <tr>
+          <td>
+            <button type="button" class="btn btn-default btn-block">Other Services Report</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button type="button" class="btn btn-default btn-block">VAT Taxes</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button type="button" class="btn btn-default btn-block">Recoverable lines</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button type="button" class="btn btn-default btn-block">Allocation</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button type="button" class="btn btn-default btn-block">Performance</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-md-8">
+      <table class="table table-hover table-bordered">
+        <caption class="caption">LOCATIONS</caption>
+        <tr>
+          <th><button type="button" class="btn btn-default">Output Data File</button></th>
+          <td>Z:\Freight\FIRST\Reports</td>
+        </tr>
+        <tr>
+          <th>FIRST DB</th>
+          <td>Z:\Freight\FIRST\Kaizen\New FIRST-Kaizen.xls</td>
+        </tr>
+        <tr>
+          <th>Payment Release</th>
+          <td>Z:\Freight\FIRST\Kaizen\Payment</td>
+        </tr>
+        <tr>
+          <th>Dispute Files</th>
+          <td>Z:\Freight\FIRST\Disputes</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="container table-responsive">
+  <table class="table table-striped table-hover">
+    <h3>CONTACTS</h3>
+    <tr>
+      <th>Carrier</th>
+      <th>Dispute Emails</th>
+      <th>Payment Release Emails</th>
+    </tr>
+    <tr>
+      <td>FEDEX-FRT</td>
+      <td>collections@fedex.com</td>
+      <td>collections@fedex.com</td>
+    </tr>
+    <tr>
+      <td>FEDEX</td>
+      <td>kim.robertson@fedex.com; quickresponse7@fedex.com; fedexcollections@fedex.com: fedex.com/us/account/invhome/other/eremit.html</td>
+      <td>kim.robertson@fedex.com; useft@fedex.com; eremit@fedex.com</td>
+    </tr>
+    <tr>
+      <td>UPS dom</td>
+      <td>mxarmstrong@ups.com; ajoly@ups.com</td>
+      <td>achdetail@ups.com; mxarmstrong@ups.com; ajoly@ups.com; </td>
+    </tr>
+    <tr>
+      <td>UPS imp</td>
+      <td>Preferred.us@ups.com; srbrown@ups.com; ajoly@ups.com</td>
+      <td>paymentremit@ups.com; srbrown@ups.com; ajoly@ups.com; kminal@ups.com; WST3XYF@upsstore.com</td>
+    </tr>
+    <tr>
+      <td>SCHENKER IB</td>
+      <td>kathleen.clarke@dbschenker.com</td>
+      <td>ar.details@dbschenker.com; kathleen.clarke@dbschenker.com</td>
+    </tr>
+    <tr>
+      <td>SCHENKER OB</td>
+      <td>kathleen.clarke@dbschenker.com</td>
+      <td>ar.details@dbschenker.com;kathleen.clarke@dbschenker.com</td>
+    </tr>
+    <tr>
+      <td>DHL Express</td>
+      <td>henry.leon@dhl.com</td>
+      <td>henry.leon@dhl.com</td>
+    </tr>
+    <tr>
+      <td>MNX</td>
+      <td>accounts.receivable@mnx.com</td>
+      <td>accounts.receivable@mnx.com</td>
+    </tr>
+    <tr>
+      <td>UPS-SCS</td>
+      <td>mtigue@ups.com; ajoly@ups.com</td>
+      <td>mtigue@ups.com; ajoly@ups.com</td>
+    </tr>
+    <tr>
+      <td>STERLING</td>
+      <td>diane_angus@qintl.com</td>
+      <td>diane_angus@qintl.com</td>
+    </tr>
+  </table>
+</div>
+
+
+
+{% endblock %}

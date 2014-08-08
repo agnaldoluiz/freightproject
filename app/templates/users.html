@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+	<h1>Users</h1>
+	<br>
+	<table class="table table-striped">
+		{% for user in users %}
+		<tr>
+			<td>{{user.id}}</td>
+			<td><a href="{{ url_for('user', name = user.email.split('@')[0])}}">Profile</a></td>
+			<td>{{user.email}}</td>
+			<td>{% if user.role == 1 %}ADMIN{% else %}USER{% endif %}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endblock %}

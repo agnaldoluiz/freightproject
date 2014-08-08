@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h1>Tasks</h1>
+    <hr>
+    <h2>Create User</h2>
+    <form class="form-horizontal" role="form" action="" method="post" name="login">
+        {{form.hidden_tag()}}
+        <div class="form-group">
+            <label for="inputEmail3" class="col-md-2 control-label">New Email</label>
+            <div class="col-md-10">
+                {{form.email(size=80)}}
+            </div>            
+        </div>
+        <div class="form-group">
+            <label for="inputPassword3" class="col-md-2 control-label">New Password</label> 
+            <div class="col-md-10">
+                {{form.new_password()}}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword3" class="col-md-2 control-label">Confirm Password</label> 
+            <div class="col-md-10">
+                {{form.confirm_password()}}
+            </div>
+        </div>
+
+       	<div class="form-group">
+       		<label for="inputPassword3" class="col-md-2 control-label">Role</label> 
+       		<div class="col-md-10">
+				<div class="btn-group">
+					<select class="form-control">
+	  					<option href="{% set role = 0 %}">User</option>
+	  					<option href="{% set role = 1 %}">Admin</option>
+					</select>
+				</div>
+			</div>
+		</div>
+        <div class="form-group">
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                <p><input type="submit" value="Create User" class="btn btn-primary"></p>
+            </div>
+        </div>
+    </form>
+    <a href="{{url_for('user_admin')}}" type="button" class="btn btn-primary">See All Users</a>
+    <hr>
+    <h2>Create Carrier</h2>
+    <small>Upload a square logo at /app/static/img</small>
+    <form class="form-horizontal" role="form" action="" method="post" name="login">
+        {{carrier_form.hidden_tag()}}
+        <div class="form-group">
+            <label for="inputEmail3" class="col-md-2 control-label">New Carrier</label>
+            <div class="col-md-10">
+                {{carrier_form.name()}}
+            </div>            
+        </div>
+        <div class="form-group">
+            <label for="inputPassword3" class="col-md-2 control-label">Dispute Emails</label> 
+            <div class="col-md-10">
+                {{carrier_form.dispute_emails()}}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword3" class="col-md-2 control-label">Payment Release Emails</label> 
+            <div class="col-md-10">
+                {{carrier_form.payment_release_emails()}}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                <p><input type="submit" value="Create Carrier" class="btn btn-primary"></p>
+            </div>
+        </div>
+    </form>
+    <a href="{{url_for('carriers')}}" type="button" class="btn btn-primary">See All Carriers</a>
+    <hr>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+	<h1>User {{user.email.split('@')[0].upper()}}</h1>
+	<hr>
+	{% if g.user.id == user.id and g.user.role == 1 %}
+	<a href="{{url_for('admin')}}" type="button" class="btn btn-primary">Admin Panel</a>
+	{% endif %}
+	<h3>History</h3>
+</div>
+{% endblock %}
