@@ -56,3 +56,4 @@ target/
 app.db
 search.db
 flask
+scripts
