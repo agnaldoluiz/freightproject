@@ -40,6 +40,7 @@ def index():
 		approved = approved,
 		processed = processed,
 		evaluate = evaluate,
+		dispute = dispute,
 		freights = freights)
 
 @app.route('/evaluate')
@@ -90,7 +91,7 @@ def data():
 	csv_all = input_file.read()
 	csv_lines = csv_all.split('\n')
 	data = []
-	for line in csv_lines:	data.append(line.split(','))
+	for line in csv_lines:	data.append(line.split('^'))
 	input_file.close()
 	return render_template('data.html',
 		data = data)
@@ -220,38 +221,47 @@ def upload():
 		return int(invoice)
 
 	def validEntryNumber(number):
-		if number is not None:
-			num = number.split('\'')[1]
-			return int(num)
+		if number is '':
+			return 0
 		else:
-			return number
+			return int(number)
 
 	def validEntryDate(string):
-		listing = string.split(' ')[2]
-		year = ''
-		for i in range(4):
-			year += listing[i]
-		year = int(year)
-		new_date = date(year, int(listing[4] + listing[5]), int(listing[6] + listing[7]))
+		listing = string.split(' ')
+		if len(listing) == 3:
+			listing = string.split(' ')[2]
+			year = ''
+			for i in range(4):
+				year += listing[i]
+			year = int(year)
+			new_date = date(year, int(listing[4] + listing[5]), int(listing[6] + listing[7]))
+		else:
+			new_date = None
 		return new_date
 
+	def canada_tax(string):
+		if string == '':
+			return 0.0
+		else:
+			return float(string)
+
 	#Carrier Code: 44
-	for i in range(len(csv_lines)):
-		invoice = Invoice(id = id_invoice_and_hawb(data[i][1]), date = validDateInvoice(data[i][2]), bill_to_account = int(data[i][16]) , total = float(data[i][3]), carrier_id = int(data[i][44]))
-		hawb = Hawb(id = id_invoice_and_hawb(data[i][7]), total = float(data[i][10]), frt = float(data[i][11]), gov = float(data[i][12]), ins = float(data[i][13]), fuel = float(data[i][14]), other = float(data[i][15]), char_weight = float(data[i][9]), ent_weight = float(data[i][8]))
-		shipper = Shipper(company = str(data[i][18]), name = str(data[i][19]) , zip_code = str(data[i][20]), city = str(data[i][21]), state = str(data[i][22]) , country = str(data[i][23]), classification = int(data[i][39]))
-		recipient = Recipient(company = str(data[i][25]), name = str(data[i][24]), zip_code = str(data[i][26]), city = str(data[i][27]), state = str(data[i][28]) , country = str(data[i][29]), classification = int(data[i][40]))
-		service = Service(name = str(data[i][4]), carrier_id = str(data[i][44]))
-		freight = Freight(ship_date = validDateShip(data[i][5]), entry = int(data[i][6]), entry_date = validEntryDate(data[i][33]), payor = str(data[i][17]), reference = str(data[i][30]), other_cost = str(data[i][31]), canada_tax = float(data[i][32]), delivery_date = validDateInvoice(data[i][35]), first_upload_date = validDateInvoice(data[i][34]), status = str(data[i][36]), invoice_id = invoice.id, service_id = service.id, hawb_id = hawb.id, shipper_id = shipper.id, recipient_id = recipient.id, user_id = g.user.id) 
-
-		db.session.add(invoice)
+	for i in range(1, len(csv_lines) - 1):
+		invoice = Invoice.query.filter_by(id = id_invoice_and_hawb(data[i][1])).first()
+		if invoice is None:
+			invoice = Invoice(id = id_invoice_and_hawb(data[i][1]), date = validDateInvoice(data[i][2]), bill_to_account = int(data[i][16]) , total = float(data[i][3]), carrier_id = int(data[i][44]))
+			db.session.add(invoice)
+		hawb = Hawb(number = id_invoice_and_hawb(data[i][7]), total = float(data[i][10]), frt = float(data[i][11]), gov = float(data[i][12]), ins = float(data[i][13]), fuel = float(data[i][14]), other = float(data[i][15]), char_weight = float(data[i][9]), ent_weight = float(data[i][8]))
 		db.session.add(hawb)
+		shipper = Shipper(company = str(data[i][18]), name = str(data[i][19]) , zip_code = str(data[i][20]), city = str(data[i][21]), state = str(data[i][22]) , country = str(data[i][23]), classification = int(data[i][39]))
 		db.session.add(shipper)
+		recipient = Recipient(company = str(data[i][25]), name = str(data[i][24]), zip_code = str(data[i][26]), city = str(data[i][27]), state = str(data[i][28]) , country = str(data[i][29]), classification = int(data[i][40]))
 		db.session.add(recipient)
+		service = Service(name = str(data[i][4]), carrier_id = str(data[i][44]))
 		db.session.add(service)
+		freight = Freight(ship_date = validDateShip(data[i][5]), entry = validEntryNumber(data[i][6]), entry_date = validEntryDate(data[i][33]), payor = str(data[i][17]), reference = str(data[i][30]), other_cost = str(data[i][31]), canada_tax = canada_tax(data[i][32]), delivery_date = validDateInvoice(data[i][35]), first_upload_date = validDateInvoice(data[i][34]), status = str(data[i][36]), invoice_id = invoice.id, service_id = service.id, hawb_id = hawb.id, shipper_id = shipper.id, recipient_id = recipient.id, user_id = g.user.id)
 		db.session.add(freight)
-
 		db.session.commit()
 
-		flash('The freight was added %s' % (freight.ship_date))
+	flash('All the freights were added')
 	return redirect(url_for('index'))

@@ -47,7 +47,7 @@
         <tr>
           <th>Payment Processed</th>
           <td>{{processed|count}}</td>
-          <td>{{(processed|count)/(freights|count)* 100}}%</td>
+          <td>{% if freights|count != 0 %}{{(processed|count)/(freights|count)* 100}}%{% endif %}</td>
         </tr>
         <tr>
           <th>Released for Payment</th>
@@ -57,7 +57,7 @@
         <tr>
           <th>Accepted for Payment</th>
           <td>{{accepted|count}}</td>
-          <td>MOC</td>
+          <td>{% if freights|count != 0 %}{{(accepted|count)/(freights|count)* 100}}%{% endif %}</td>
         </tr>
         <tr>
           <th>Under Dispute</th>
@@ -66,13 +66,13 @@
         </tr>
         <tr>
           <th>Dispute Accepted</th>
-          <td>MOC</td>
-          <td>MOC</td>
+          <td>{{dispute|count}}</td>
+          <td>{% if freights|count != 0 %}{{(dispute|count)/(freights|count)* 100}}%{% endif %}</td>
         </tr>
         <tr>
           <th>Pending Evaluation</th>
           <td>{{evaluate|count}}</td>
-          <td>MOC</td>
+          <td>{% if freights|count != 0 %}{{(evaluate|count)/(freights|count)* 100}}%{% endif %}</td>
         </tr>
       </table>
     </div>

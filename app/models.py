@@ -54,6 +54,7 @@ class Invoice(db.Model):
 
 class Hawb(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
+	number = db.Column(db.Integer)
 	freights = db.relationship('Freight', backref = 'hawb', lazy = 'dynamic')
 	total = db.Column(db.Float)
 	char_weight = db.Column(db.Float)
