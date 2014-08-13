@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<div class="container">
+	<table class="table table-bordered">
+		<tr>
+			<th>CARRIER</th>
+			<th>INVOICE</th>
+			<th>INVOICE DATE</th>
+			<th>HAWB</th>
+			<th>ENTRY</th>
+			<th>ENTRY DATE</th>
+			<th>RECIPIENT COMPANY</th>
+			<th>RECIPIENT STATE</th>
+			<th>RECIPIENT COUNTRY</th>
+			<th>DOC TYPE</th>
+			<th>DOC REF</th>
+			<th>AMOUNT</th>
+			<th>TAX DESCRIPTION</th>
+			<th>ATM <small>Local Currency</small></th>
+		</tr>
+		{% for ftax in ftaxes %}
+		<tr>
+			<td>ftax.service.carrier.name</td>
+			<td>{{ftax.invoice.id}}</td>
+			<td>{{ftax.invoice.date}}</td>
+			<td>{{ftax.hawb.number}}</td>
+			<td>{{ftax.entry}}</td>
+			<td>{{ftax.entry_date}}</td>
+			<td>{{ftax.recipient.company}}</td>
+			<td>{{ftax.recipient.state}}</td>
+			<td>{{ftax.recipient.country}}</td>
+			<td>DOC TYPE</td>
+			<td>DOC REF</td>
+			<td>AMOUNT</td>
+			<td>TAX DESCRIPTION</td>
+			<td>ATM <small>Local Currency</small></td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+
+{{ftaxes|count}}
+{% endblock %}

@@ -1,3 +1,4 @@
+{% for ev in evaluate %}
 <div class="" style="border: 0.025px solid; border-color: #B0B0B0; border-radius: 5px; box-shadow: 2px 2px 1px #888888; padding:10px;">
 	<table class="table table-hover table-striped">
 		<h4>Item MOC</h4>
@@ -9,9 +10,9 @@
 			<th>Service</th>
 		</tr>
 		<tr>
-			<td>MOC</td>
-			<td>MOC</td>
-			<td>MOC</td>
+			<td>ev.service.carrier.name</td>
+			<td>{{ev.invoice.id}}</td>
+			<td>{{ev.invoice.date}}</td>
 			<td>MOC</td>
 			<td class="success">MOC</td>
 		</tr>
@@ -46,3 +47,4 @@
 		</tr>
 	</table>
 </div>
+{% endfor %}

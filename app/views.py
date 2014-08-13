@@ -22,14 +22,14 @@ def index():
 	user = g.user
 	freights = Freight.query.all()
 	evaluate = []
-	approved = []
+	accepted = []
 	processed = []
 	dispute = []
 	for freight in freights:
-		if freight.status == 'E':
-			evaluate.append(freight)
-		elif freight.status == 'A':
-			approved.append(freight)
+		if freight.status == 'A':
+			accepted.append(freight)	
+		elif freight.status == 'E':
+			evaluate.append(freight)			
 		elif freight.status == 'P':
 			processed.append(freight)
 		elif freight.status == 'D':
@@ -37,7 +37,7 @@ def index():
 
 
 	return render_template("main.html",
-		approved = approved,
+		accepted = accepted,
 		processed = processed,
 		evaluate = evaluate,
 		dispute = dispute,
@@ -46,7 +46,9 @@ def index():
 @app.route('/evaluate')
 @app.route('/evaluate/<int:page>')
 def evaluate(page = 1):
-	return render_template("evaluate.html")
+	evaluate = Freight.query.filter_by(status = 'E').all()
+	return render_template("evaluate.html",
+		evaluate = evaluate)
 
 @app.route('/dispute')
 def dispute():
@@ -168,13 +170,14 @@ def user(name):
 		user = user)
 
 @app.route('/upload')
+@login_required
 def upload():
 	input_file = open("data.csv", "r+")
 	csv_all = input_file.read()
 	csv_lines = csv_all.split('\n')
 	data = []
 	for line in csv_lines:	
-		data.append(line.split(','))
+		data.append(line.split('^'))
 	input_file.close()
 
 	def monthToNum(date):
@@ -265,3 +268,73 @@ def upload():
 
 	flash('All the freights were added')
 	return redirect(url_for('index'))
+
+@app.route('/admin/reset')
+@login_required
+def reset():
+	import os, subprocess, sys
+	if sys.platform == 'win32':
+		remove = 'del'
+		bin = 'Scripts'
+	else:
+		remove = 'rm'
+		bin = 'bin'
+
+	print "OK"
+	subprocess.call([os.path.join(remove), '-r', 'db_repository/'])
+	subprocess.call([os.path.join(remove), 'app.db'])
+	subprocess.call([os.path.join('flask', bin, 'python'), 'db_create.py'])
+	subprocess.call([os.path.join('flask', bin, 'python'), 'db_migrate.py'])
+	print "OK2"
+	print "OK2.1"
+	'''
+	fedex = Carrier(id = 402645, name = 'fedex', dispute_emails = 'kim.robertson@fedex.com; quickresponse7@fedex.com; fedexcollections@fedex.com: fedex.com/us/account/invhome/other/eremit.html' , payment_release_emails = 'kim.robertson@fedex.com; useft@fedex.com; eremit@fedex.com')
+	ups_dom = Carrier(id = 402919, name = 'ups_dom', dispute_emails = 'mxarmstrong@ups.com; ajoly@ups.com', payment_release_emails = 'achdetail@ups.com; mxarmstrong@ups.com; ajoly@ups.com')
+	ups_imp = Carrier(id = 402623, name = 'ups_imp', dispute_emails = 'preferred.us@ups.com; srbrown@ups.com; ajoly@ups.com', payment_release_emails = 'paymentremit@ups.com; srbrown@ups.com; ajoly@ups.com; kminal@ups.com; WST3XYF@upsstore.com')
+	schenker = Carrier(id = 804244, name = 'schenker', dispute_emails = 'kathleen.clarke@dbschenker.com', payment_release_emails = 'kathleen.clarke@dbschenker.com')
+	dhl = Carrier(id = 402604, name = 'dhl', dispute_emails = 'henry.leon@dhl.com', payment_release_emails = 'henry.leon@dhl.com')
+	mnx = Carrier(id = 807354, name = 'mnx', dispute_emails = 'accounts.receivable@mnx.com', payment_release_emails = 'accounts.receivable@mnx.com')
+	sterling = Carrier(id = 402885, name = 'sterling', dispute_emails = 'diane_angus@qintl.com', payment_release_emails = 'diane_angus@qintl.com')
+	gzuz = Carrier(id = 805968, name = 'gzuz', dispute_emails = '', payment_release_emails = '')
+	db.session.add(fedex)
+	db.session.add(ups_dom)
+	db.session.add(ups_imp)
+	db.session.add(schenker)
+	db.session.add(dhl)
+	db.session.add(mnx)
+	db.session.add(sterling)
+	db.session.add(gzuz)
+	'''
+	admin = User(email = 'admin@embraer.com', role = ROLE_ADMIN, password = 'FirstPassword')
+	db.session.add(admin)
+	db.session.commit()
+	print "OK3"
+	return redirect(url_for('admin'))
+
+@app.route('/freights')
+@login_required
+def freights():
+	freights = Freight.query.all()
+	accepted = []
+	evaluate = []
+	for freight in freights:
+		if freight.status == 'A':
+			accepted.append(freight)
+		if freight.status == 'E':
+			evaluate.append(freight)
+	return render_template('freights.html',
+		evaluate = evaluate,
+		accepted = accepted,
+		freights = freights)
+
+@app.route('/vat_taxes')
+@login_required
+def vat_taxes():
+	ftaxes = []
+	freights = Freight.query.all()
+	for freight in freights:
+		if freight.canada_tax != 0:
+			ftaxes.append(freight)
+	
+	return render_template('vat_taxes.html',
+		ftaxes = ftaxes)

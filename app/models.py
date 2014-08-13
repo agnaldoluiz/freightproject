@@ -7,13 +7,13 @@ class Freight(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	invoice_id = db.Column(db.Integer, db.ForeignKey('invoice.id'))
 	service_id = db.Column(db.Integer, db.ForeignKey('service.id'))
+	hawb_id = db.Column(db.Integer, db.ForeignKey('hawb.id'))
+	shipper_id = db.Column(db.Integer, db.ForeignKey('shipper.id'))
+	recipient_id = db.Column(db.Integer, db.ForeignKey('recipient.id'))
 	ship_date = db.Column(db.Date)
 	entry = db.Column(db.Integer)
 	entry_date = db.Column(db.Date)
-	hawb_id = db.Column(db.Integer, db.ForeignKey('hawb.id'))
 	payor = db.Column(db.String(64))
-	shipper_id = db.Column(db.Integer, db.ForeignKey('shipper.id'))
-	recipient_id = db.Column(db.Integer, db.ForeignKey('recipient.id'))
 	reference = db.Column(db.String(128))
 	other_cost = db.Column(db.String(128))
 	canada_tax = db.Column(db.Integer)
@@ -44,6 +44,9 @@ class Service(db.Model):
 	freights = db.relationship('Freight', backref = 'service', lazy = 'dynamic')
 	carrier_id = db.Column(db.Integer, db.ForeignKey('carrier.id'))
 
+	def __repr__(self):
+		return "Service '%s'" % self.name
+
 class Invoice(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	freights = db.relationship('Freight', backref = 'invoice', lazy = 'dynamic')
@@ -51,6 +54,9 @@ class Invoice(db.Model):
 	date = db.Column(db.Date)
 	total = db.Column(db.Float)
 	bill_to_account = db.Column(db.Integer)
+
+	def __repr__(self):
+		return "Invoice #'%s'" % self.id
 
 class Hawb(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
@@ -64,6 +70,9 @@ class Hawb(db.Model):
 	ins = db.Column(db.Float)
 	fuel = db.Column(db.Float)
 	other = db.Column(db.Float)
+
+	def __repr__(self):
+		return "HAWB #'%s'" % self.number
 
 class Shipper(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
@@ -89,7 +98,7 @@ class Recipient(db.Model):
 
 class User(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
-	email = db.Column(db.String(120), index = True, unique = True)
+	email = db.Column(db.String(120), index = True, unique = False)
 	role = db.Column(db.SmallInteger, default = ROLE_USER)
 	password = db.Column(db.String(64))
 	freights = db.relationship('Freight', backref = 'user', lazy = 'dynamic')

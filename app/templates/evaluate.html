@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container">
-	<div class="jumbotron">
+<div class="jumbotron">
+	<div class="container">
 		<h1>Evaluation Panel</h1>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+		<p>Panel made for evaluations. All the modifications will be saved in the database.</p>
 	</div>
 </div>
 <div class="container">
 	<div class="row">
 		<div class="col-md-9">
-			<h3>Hi, you have MOC items to evaluate!</h3>
+			<h3>Hi, you have {{evaluate|count}} items to evaluate!</h3>
 			<br>
 			{% include 'evaluatepanel.html' %}
 		<div class="text-center">

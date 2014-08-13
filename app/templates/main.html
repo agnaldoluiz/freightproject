@@ -5,8 +5,23 @@
   <div class="container">
     <h1>Freight Control</h1>
     <br>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <p>This is a prototype for the new First. Its code is located at https://github.com/agnaldoluiz/freightproject. You can contact the developer at agnaldoluiz@gmail.com</p>
   </div> 
+</div>
+
+<div class="container">
+  <div class="col-md-9">
+    <ul class="list-unstyled list-inline">
+      <li><h4>See all the carriers</h4>
+          <a href="{{url_for('carriers')}}" type="button" class="btn btn-primary">CARRIERS</a><hr>
+      </li>
+      <li><h4>See all the Freights</h4>
+          <a href="{{url_for('freights')}}" type="button" class="btn btn-primary">FREIGHTS</a><hr>
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-3">
+  <a href="{{url_for('upload')}}" type="button" class="btn btn-primary">Upload Data From CSV</a></div>
 </div>
 
 <div class="container">
@@ -56,7 +71,7 @@
         </tr>
         <tr>
           <th>Accepted for Payment</th>
-          <td>{{accepted|count}}</td>
+          <td>{{accepted|length}}</td>
           <td>{% if freights|count != 0 %}{{(accepted|count)/(freights|count)* 100}}%{% endif %}</td>
         </tr>
         <tr>
@@ -98,7 +113,7 @@
         </tr>
         <tr>
           <td>
-            <button type="button" class="btn btn-default btn-block">VAT Taxes</button>
+            <a href="{{url_for('vat_taxes')}}" type="button" class="btn btn-default btn-block">VAT Taxes</a>
           </td>
         </tr>
         <tr>

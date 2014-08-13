@@ -76,5 +76,12 @@
     </form>
     <a href="{{url_for('carriers')}}" type="button" class="btn btn-primary">See All Carriers</a>
     <hr>
+    <div class="container">
+        <p>Instructions to reset: Delete folder db_repository and file app.db. After that, click on the button</p>
+        <a href="{{url_for('reset')}}" type="button" class="btn btn-primary">Reset</a>
+    </div>
+    <hr>
+    <br>
+    <br>
 </div>
 {% endblock %}
