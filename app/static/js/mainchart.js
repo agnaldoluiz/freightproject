@@ -1,4 +1,9 @@
 $(function () {
+    //Global Variables
+    val1 = parseFloat($('input[name=fir]').val());
+    val2 = parseFloat($('input[name=sec]').val());
+
+
     $('#container').highcharts({
         chart: {
             plotBackgroundColor: null,
@@ -28,17 +33,16 @@ $(function () {
             type: 'pie',
             name: 'Freight Content',
             data: [
-                ['Payment Processed',  45.0],
-                ['Released for Payment',       26.8],
+                ['Released for Payment', parseFloat($('span[name=released]').val())],
                 {
                     name: 'Pending Evaluation',
-                    y: 12.8,
+                    y: parseFloat($('span[name=evaluate]').val()),
                     sliced: true,
                     selected: true
                 },
-                ['Accepted for Payment',    8.5],
-                ['Under Dispute',     6.2],
-                ['Dispute Accepted',   0.7]
+                ['Accepted for Payment', parseFloat($('span[name=accepted]').val())],
+                ['Under Dispute', parseFloat($('span[name=dispute]').val())],
+                ['Dispute Accepted', parseFloat($('span[name=acc_dispute]').val())]
             ]
         }]
     });

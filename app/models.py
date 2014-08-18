@@ -14,13 +14,17 @@ class Freight(db.Model):
 	entry = db.Column(db.Integer)
 	entry_date = db.Column(db.Date)
 	payor = db.Column(db.String(64))
-	reference = db.Column(db.String(128))
+	reference = db.Column(db.Text)
 	other_cost = db.Column(db.String(128))
 	canada_tax = db.Column(db.Integer)
 	delivery_date = db.Column(db.Date)
 	first_upload_date = db.Column(db.Date)
 	status = db.Column(db.String(1))
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	evaluation_issue = db.Column(db.Text)
+	consistency_issue = db.Column(db.Text)
+	doc_type = db.Column(db.String)
+	doc_ref = db.Column(db.String)
 
 	def __repr__(self):
 		return "Freight #'%s'" % (str(self.id))

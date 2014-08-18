@@ -60,34 +60,29 @@
           <td>100%</td>
         </tr>
         <tr>
-          <th>Payment Processed</th>
-          <td>{{processed|count}}</td>
-          <td>{% if freights|count != 0 %}{{(processed|count)/(freights|count)* 100}}%{% endif %}</td>
-        </tr>
-        <tr>
           <th>Released for Payment</th>
-          <td>MOC</td>
-          <td>MOC</td>
+          <td>{{released|count}}</td>
+          <td>{% if freights|count != 0 %}<span id="released">{{(released|count)/(freights|count)*100}}</span>%{% else %}0%{% endif %}</td>
         </tr>
         <tr>
           <th>Accepted for Payment</th>
           <td>{{accepted|length}}</td>
-          <td>{% if freights|count != 0 %}{{(accepted|count)/(freights|count)* 100}}%{% endif %}</td>
+          <td>{% if freights|count != 0 %}<span name="accepted">{{(accepted|count)/(freights|count)* 100}}</span>%{% else %}0%{% endif %}</td>
         </tr>
         <tr>
           <th>Under Dispute</th>
-          <td>MOC</td>
-          <td>MOC</td>
+          <td>{{dispute|count}}</td>
+          <td>{% if freights|count != 0 %}<span name="dispute">{{(dispute|count)/(freights|count)* 100}}</span>%{% else %}0%{% endif %}</td>
         </tr>
         <tr>
           <th>Dispute Accepted</th>
-          <td>{{dispute|count}}</td>
-          <td>{% if freights|count != 0 %}{{(dispute|count)/(freights|count)* 100}}%{% endif %}</td>
+          <td>{{acc_dispute|count}}</td>
+          <td>{% if freights|count != 0 %}<span name="acc_dispute">{{(acc_dispute|count)/(freights|count)* 100}}</span>%{% else %}0%{% endif %}</td>
         </tr>
         <tr>
           <th>Pending Evaluation</th>
           <td>{{evaluate|count}}</td>
-          <td>{% if freights|count != 0 %}{{(evaluate|count)/(freights|count)* 100}}%{% endif %}</td>
+          <td>{% if freights|count != 0 %}<span name="evaluate">{{(evaluate|count)/(freights|count)* 100}}</span>%{% else %}0%{% endif %}</td>
         </tr>
       </table>
     </div>

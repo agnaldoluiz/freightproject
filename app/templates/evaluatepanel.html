@@ -1,50 +1,98 @@
 {% for ev in evaluate %}
-<div class="" style="border: 0.025px solid; border-color: #B0B0B0; border-radius: 5px; box-shadow: 2px 2px 1px #888888; padding:10px;">
-	<table class="table table-hover table-striped">
-		<h4>Item MOC</h4>
-		<tr>
-			<th>Carrier</th>
-			<th>Invoice #</th>
-			<th>Invoice Date</th>
-			<th>AWB #</th>
-			<th>Service</th>
-		</tr>
-		<tr>
-			<td>ev.service.carrier.name</td>
-			<td>{{ev.invoice.id}}</td>
-			<td>{{ev.invoice.date}}</td>
-			<td>MOC</td>
-			<td class="success">MOC</td>
-		</tr>
-	</table>
-	<br />
-	<table class="table table-striped table-hover">
-		<tr>
-			<th style="text-align:center;" colspan="2">Evaluation Issue</th>
-		</tr>
-		<tr>
-			<td colspan="2">MOC</td>
-		</tr>
-		<tr>
-			<th>Consistency Issue</th>
-			<td class="success">MOC</td>
-		</tr>
-	</table>
-	<br />
-	<table class="table table-bordered">
-		<tr>
-			<th colspan="2">Weight(lb)</th>
-			<th>Reference</th>
-		</tr>
-		<tr>
-			<th>Entered</th>
-			<th>Chargeable</th>
-			<td rowspan="2">MOC</td>
-		</tr>
-		<tr>
-			<td>MOC</td>
-			<td>MOC</td>
-		</tr>
-	</table>
+<div class="container" style="border: 1px solid; border-color: #B0B0B0; border-radius: 5px; box-shadow: 2px 2px 1px #888888; padding:20px;">
+	<div class="row">
+		<div class="col-md-8">
+			<table class="table table-hover table-striped">
+				<h4>Freight HAWB <b>{{ev.hawb.number}}</b> and INVOICE <b>{{ev.invoice.id}}</b></h4>
+				<br>
+				<tr>
+					<th>Carrier</th>
+					<th>Invoice #</th>
+					<th>Invoice Date</th>
+					<th>AWB #</th>
+					<th>Service</th>
+				</tr>
+				<tr>
+					<td>{{ev.service.carrier.name|upper}}</td>
+					<td>{{ev.invoice.id}}</td>
+					<td>{{ev.invoice.date}}</td>
+					<td>{{ev.hawb.number}}</td>
+					<td class="success">{{ev.service.name}}</td>
+				</tr>
+			</table>
+			<br />
+			<table class="table table-striped table-hover">
+				<tr>
+					<th style="text-align:center;" colspan="2">Evaluation Issue</th>
+				</tr>
+				<tr>
+					<td colspan="2">{% if ev.evaluation_issue == '' %}No Evaluation Issues{% else %}{{ev.evaluation_issue}}{% endif %}</td>
+				</tr>
+				<tr>
+					<th>Consistency Issue</th>
+					<td class="success">{% if ev.consistency_issue == '' %}No Consistency Issues{% else %}{{ev.consistency_issue}}{% endif %}</td>
+				</tr>
+			</table>
+			<br />
+			<table class="table table-bordered table-striped">
+				<tr>
+					<th colspan="2">Weight(lb)</th>
+					<th>Reference</th>
+				</tr>
+				<tr>
+					<th>Entered</th>
+					<th>Chargeable</th>
+					<td rowspan="2">{{ev.reference}}</td>
+				</tr>
+				<tr>
+					<td>{{ev.hawb.char_weight}}</td>
+					<td>{{ev.hawb.ent_weight}}</td>
+				</tr>
+			</table>
+			<table class="table table-bordered table-striped table-hover">
+				<thead>
+					<tr>
+						<th>FREIGHT</th>
+						<th>FUEL</th>
+						<th>GOV</th>
+						<th>INSURANCE</th>
+						<th>OTHER FEES</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{ev.hawb.frt}}</td>
+						<td>{{ev.hawb.fuel}}</td>
+						<td>{{ev.hawb.gov}}</td>
+						<td>{{ev.hawb.ins}}</td>
+						<td>{{ev.hawb.other}}
+				</tbody>
+			</table>
+			<div class="row">
+				<div class="col-md-4">
+					<table class="table table-bordered table-striped table-hover">
+						<caption>ALLOCATION DATA</caption>
+						<tr>
+							<th>DOC TYPE</th>
+							<td>{{ev.doc_type}}</td>
+						</tr>
+						<tr>
+							<th>DOC REF</th>
+							<td>{{ev.doc_ref}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-8">
+					<table class="table table-striped">
+						<tr>
+							<th colspan="2">COST CENTER/TRD PARTNER</th>
+							<th colspan="2">PROFIT CENTER</th>
+						</tr>
+					</table>
+			</div>
+		</div>
+		<div class="col-md-4">
+			test
+		</div>
+	</div>
 </div>
 {% endfor %}

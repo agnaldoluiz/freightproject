@@ -1,21 +1,43 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-	{{accepted|count}}
-	{{evaluate|count}}
+	<div class="container">
+		<h3>Accepted</h3>
+		{{accepted|count}}
+	</div>
+	<hr>
+	<div class="container">
+		<h3>To Evaluate</h3>
+		{{evaluate|count}}
+	</div>
 </div>
+<br>
+<hr>
+<br>
 <div class="container">
 	<table class="table">
+		<thead>
+			<tr>
+				<th>FREIGHT ID</th>
+				<th>INVOICE</th>
+				<th>HAWB</th>
+				<th>INVOICE TOTAL</th>
+				<th>STATUS</th>
+				<th>USER</th>
+			</tr>
+		</thead>
+		<tbody>
 		{% for freight in freights %}
-		<tr>
-			<td>{{freight.id}}</td>
-			<td>{{freight.invoice.id}}</td>
-			<td>{{freight.hawb.id}}</td>
-			<td>{{freight.invoice.total}}</td>
-			<td>{{freight.status}}</td>
-			<td>{{freight.user}}</td>
-		</tr>
+			<tr>
+				<td>{{freight.id}}</td>
+				<td>{{freight.invoice.id}}</td>
+				<td>{{freight.hawb.number}}</td>
+				<td>{{freight.invoice.total}}</td>
+				<td>{{freight.status}}</td>
+				<td>{{freight.user}}</td>
+			</tr>
 		{% endfor %}
+		</tbody>
 	</table>
 </div>
 {% endblock %}
