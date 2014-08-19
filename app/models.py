@@ -121,3 +121,21 @@ class User(db.Model):
 
 	def __repr__(self):
 		return self.email.split('@')[0].upper()
+
+class ProfitCenter(db.Model):
+	id = db.Column(db.Integer, primary_key = True)
+	name = db.Column(db.String)
+	pc_ref = db.Column(db.String)
+	gl = db.Column(db.Integer)
+	fn_text = db.Column(db.String)
+	co_code = db.Column(db.String)
+	tax = db.Column(db.String)
+
+class CostCenter(db.Model):
+	id = db.Column(db.Integer, primary_key = True)
+	name = db.Column(db.String)
+	cc_ref = db.Column(db.String)
+	gl = db.Column(db.Integer)
+	fn_text = db.Column(db.String)
+	co_code = db.Column(db.String)
+	trd_partner = db.Column(db.String)

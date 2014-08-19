@@ -21,7 +21,7 @@
 		</tr>
 		{% for ftax in ftaxes %}
 		<tr>
-			<td>ftax.service.carrier.name</td>
+			<td>{{ftax.service.carrier.name|upper}}</td>
 			<td>{{ftax.invoice.id}}</td>
 			<td>{{ftax.invoice.date}}</td>
 			<td>{{ftax.hawb.number}}</td>
@@ -30,14 +30,17 @@
 			<td>{{ftax.recipient.company}}</td>
 			<td>{{ftax.recipient.state}}</td>
 			<td>{{ftax.recipient.country}}</td>
-			<td>DOC TYPE</td>
-			<td>DOC REF</td>
+			<td>{{ftax.doc_type}}</td>
+			<td>{{ftax.doc_ref}}</td>
 			<td>AMOUNT</td>
 			<td>TAX DESCRIPTION</td>
 			<td>ATM <small>Local Currency</small></td>
 		</tr>
 		{% endfor %}
 	</table>
+</div>
+<div class="container">
+	<a href="{{url_for('save_vat')}}" type="button" class="btn btn-success">SAVE</a>
 </div>
 
 {{ftaxes|count}}

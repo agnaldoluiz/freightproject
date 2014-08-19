@@ -87,11 +87,96 @@
 							<th colspan="2">COST CENTER/TRD PARTNER</th>
 							<th colspan="2">PROFIT CENTER</th>
 						</tr>
+						<tr>
+							<th>CC REF</th>
+							<td class="danger">MOC</td>
+							<th>PC REF</th>
+							<td class="danger">{{pc.pc_ref}}</td>
+						</tr>
+						<tr>
+							<th>GL</th>
+							<td class="success">MOC</td>
+							<th>GL</th>
+							<td class="success">MOC</td>
+						</tr>
+						<tr>
+							<th>FN Text</th>
+							<td class="success">MOC</td>
+							<th>FN Text</th>
+							<td class="success">MOC</td>
+						</tr>
+						<tr>
+							<th>Co Code</th>
+							<td class="success">MOC</td>
+							<th>Co Code</th>
+							<td class="success">MOC</td>
+						</tr>
+						<tr>
+							<th>Third Partner</th>
+							<td class="success">MOC</td>
+							<th>TAX</th>
+							<td class="success">MOC</td>
+						</tr>
 					</table>
+					<form class="form-horizontal" role="form" action="" method="post" name="pc">
+        				{{form.hidden_tag()}}
+						<div class="form-group"> 
+				       		<div class="btn-group">
+								<select class="form-control">
+				  					<option href="{% set pc_name = 'COMPEC' %}">COMPEC</option>
+				  					<option href="{% set pc_name = 'COMPOL' %}">COMPOL</option>
+								</select>
+								<input type="submit" value="Choose PC" class="btn btn-primary">
+							</div>
+						</div>
+					</form>
+
+
+					<!--
+					<div class="dropdown">
+						<button class="btn" id="pickButton">
+							Choose Profit Center
+						</button>
+						<button class"btn" data-toggle="dropdown">
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" id="reasonDropdown">
+							<li><a href="#" tabindex="-1">TEST</a></li>
+						</ul>
+					</div>
+					-->
+
+				</div>
 			</div>
 		</div>
 		<div class="col-md-4">
-			test
+			<table class="table table-striped">
+				<caption>SHIPPER DATA</caption>
+				<tr>
+					<th>COMPANY</th>
+					<td style="hover">{{ev.shipper.company}}</td>
+				</tr>
+				<tr>
+					<th>NAME</th>
+					<td>{{ev.shipper.name}}</td>
+				</tr>
+				<tr>
+					<th>CITY</th>
+					<td>{{ev.shipper.city}}</td>
+				</tr>
+				<tr>
+					<th>STATE</th>
+					<td>{{ev.shipper.state}}</td>
+				</tr>
+				<tr>
+					<th>ZIP</th>
+					<td>{{ev.shipper.zip_code}}</td>
+				</tr>
+				<tr>
+					<th>COUNTRY</th>
+					<td>{{ev.shipper.country}}</td>
+				</tr>
+			</table>
 		</div>
 	</div>
 </div>

@@ -2,9 +2,10 @@ from flask import render_template, url_for, redirect, session, g, flash, request
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm
 from datetime import date
+from flask.ext.wtf import Form
 from forms import LoginForm, UserForm, CarrierForm
 from config import EVALUATE_PER_PAGE
-from models import User, ROLE_USER, ROLE_ADMIN, Carrier, Invoice, Freight, Hawb, Shipper, Recipient, Service
+from models import User, ROLE_USER, ROLE_ADMIN, Carrier, Invoice, Freight, Hawb, Shipper, Recipient, Service, ProfitCenter
 
 @lm.user_loader
 def load_user(id):
@@ -46,12 +47,27 @@ def index():
 		dispute = dispute,
 		freights = freights)
 
-@app.route('/evaluate')
+@app.route('/evaluate', methods = ['GET', 'POST'])
 @app.route('/evaluate/<int:page>')
 def evaluate(page = 1):
+	pc_name = ''
+	form = Form()
 	evaluate = Freight.query.filter_by(status = 'E').all()
+	pc = None
+
+	if form.validate_on_submit():
+		pc = ProfitCenter.query.filter_by(name = pc_name).first()
+		return render_template("evaluate.html",
+			evaluate = evaluate,
+			pc_name = pc_name,
+			form = form,
+			pc = pc)
+
 	return render_template("evaluate.html",
-		evaluate = evaluate)
+		evaluate = evaluate,
+		pc_name = pc_name,
+		form = form,
+		pc = pc)
 
 @app.route('/dispute')
 def dispute():
@@ -342,3 +358,30 @@ def vat_taxes():
 	
 	return render_template('vat_taxes.html',
 		ftaxes = ftaxes)
+
+@app.route('/vat_taxes/save')
+@login_required
+def save_vat():
+	ftaxes = []
+	freights = Freight.query.all()
+	for freight in freights:
+		if freight.canada_tax != 0:
+			ftaxes.append(freight)
+	output_file = open("vat_taxes.csv", "w+")
+	for ftax in ftaxes:
+		output_file.write(str(ftax.service.carrier.name)+',')
+		output_file.write(str(ftax.invoice.id)+',')
+		output_file.write(str(ftax.invoice.date)+',')
+		output_file.write(str(ftax.hawb.number)+',')
+		output_file.write(str(ftax.entry)+',')
+		output_file.write(str(ftax.entry_date)+',')
+		output_file.write(str(ftax.recipient.company)+',')
+		output_file.write(str(ftax.recipient.state)+',')
+		output_file.write(str(ftax.doc_type)+',')
+		output_file.write(str(ftax.doc_ref)+',')		
+		output_file.write('\n')
+	output_file.close()
+	flash('All VAT taxes were saved')
+	return redirect(url_for('vat_taxes'))
+
+
