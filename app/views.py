@@ -66,6 +66,11 @@ def evaluate(page = 1):
 		form = form,
 		pc = pc)
 
+@app.route('/evaluate/process')
+@login_required
+def eval_proc(ev1, pc1):
+	return "Evaluation Done"
+
 @app.route('/dispute')
 def dispute():
 	return 'Hello World!'
