@@ -3,7 +3,7 @@ from flask.ext.login import login_user, logout_user, current_user, login_require
 from app import app, db, lm
 from datetime import date
 from flask.ext.wtf import Form
-from forms import LoginForm, UserForm, CarrierForm
+from forms import LoginForm, UserForm, CarrierForm, EvaluateForm
 from config import EVALUATE_PER_PAGE
 from models import User, ROLE_USER, ROLE_ADMIN, Carrier, Invoice, Freight, Hawb, Shipper, Recipient, Service, ProfitCenter
 
@@ -50,22 +50,19 @@ def index():
 @app.route('/evaluate', methods = ['GET', 'POST'])
 @app.route('/evaluate/<int:page>')
 def evaluate(page = 1):
-	pc_name = ''
-	form = Form()
+	form = EvaluateForm()
 	evaluate = Freight.query.filter_by(status = 'E').all()
 	pc = None
 
 	if form.validate_on_submit():
-		pc = ProfitCenter.query.filter_by(name = pc_name).first()
+		pc = ProfitCenter.query.filter_by(name = form.pc.data).first()
 		return render_template("evaluate.html",
 			evaluate = evaluate,
-			pc_name = pc_name,
 			form = form,
 			pc = pc)
 
 	return render_template("evaluate.html",
 		evaluate = evaluate,
-		pc_name = pc_name,
 		form = form,
 		pc = pc)
 

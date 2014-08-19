@@ -97,39 +97,49 @@
 							<th>GL</th>
 							<td class="success">MOC</td>
 							<th>GL</th>
-							<td class="success">MOC</td>
+							<td class="success">{{pc.gl}}</td>
 						</tr>
 						<tr>
 							<th>FN Text</th>
 							<td class="success">MOC</td>
 							<th>FN Text</th>
-							<td class="success">MOC</td>
+							<td class="success">{{pc.fn_text}}</td>
 						</tr>
 						<tr>
 							<th>Co Code</th>
 							<td class="success">MOC</td>
 							<th>Co Code</th>
-							<td class="success">MOC</td>
+							<td class="success">{{pc.co_code}}</td>
 						</tr>
 						<tr>
 							<th>Third Partner</th>
 							<td class="success">MOC</td>
 							<th>TAX</th>
-							<td class="success">MOC</td>
+							<td class="success">{{pc.tax}}</td>
 						</tr>
 					</table>
-					<form class="form-horizontal" role="form" action="" method="post" name="pc">
-        				{{form.hidden_tag()}}
-						<div class="form-group"> 
-				       		<div class="btn-group">
-								<select class="form-control">
-				  					<option href="{% set pc_name = 'COMPEC' %}">COMPEC</option>
-				  					<option href="{% set pc_name = 'COMPOL' %}">COMPOL</option>
-								</select>
-								<input type="submit" value="Choose PC" class="btn btn-primary">
-							</div>
+					<div class="row">
+						<div class="col-md-6 text-center">
+							<form class="form-horizontal" role="form" action="" method="post" name="pc">
+		        				{{form.hidden_tag()}}
+		        				
+								<div class="form-group"> 
+						       		    {{form.pc}}
+						       		<input type="submit" value="Choose PC" class="btn btn-primary">
+								</div>
+							</form>
 						</div>
-					</form>
+						<div class="col-md-6 text-center">
+							<form class="form-horizontal" role="form" action="" method="post" name="pc">
+		        				{{form.hidden_tag()}}
+		        				
+								<div class="form-group"> 
+						       		{{form.pc}}
+						       		<input type="submit" value="Choose PC" class="btn btn-primary">
+								</div>
+							</form>
+						</div>
+					</div>
 
 
 					<!--

@@ -2,6 +2,8 @@
 {% block content %}
 <br>
 <div class="container">
+	<h3>Number of Freights: {{ftaxes|count}}</h3>
+	<hr>
 	<table class="table table-bordered">
 		<tr>
 			<th>CARRIER</th>
@@ -39,9 +41,8 @@
 		{% endfor %}
 	</table>
 </div>
-<div class="container">
-	<a href="{{url_for('save_vat')}}" type="button" class="btn btn-success">SAVE</a>
+<div class="container text-center">
+	<a href="{{url_for('save_vat')}}" type="button" class="btn btn-primary">SAVE</a>
 </div>
 
-{{ftaxes|count}}
 {% endblock %}
